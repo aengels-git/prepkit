@@ -1,0 +1,51 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# prepkit
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of prepkit is to ...
+
+## Installation
+
+You can install the development version of prepkit from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("aengels-git/prepkit")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a recoding:
+
+```{r}
+library(prepkit)
+prep_fct_recode(diamonds$cut,c("Fair","Good"),c("Acceptable","Pretty good"))
+```
+
+This is a basic example which shows you how to calculate a freq table:
+
+```{r}
+prep_freq_table(diamonds,cut,color)
+```
+
+This is a basic example which shows you how to calculate mean tables:
+
+```{r}
+prep_mean_table(diamonds,cut,outcomes=c("price"))
+```
