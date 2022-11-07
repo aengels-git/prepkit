@@ -3,3 +3,5 @@
 export(prep_fct_recode)
 export(prep_freq_table)
 export(prep_mean_table)
+export(prep_pivot_table)
+export(str_replace_many)
