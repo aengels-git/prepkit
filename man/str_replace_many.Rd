@@ -13,9 +13,6 @@ str_replace_many(string, patterns, replacements)
 
 \item{replacements}{A vector of equal length to replace the found patterns}
 }
-\value{
-
-}
 \description{
 Replace multiple strings in character vectors. Can be used for recoding!
 }

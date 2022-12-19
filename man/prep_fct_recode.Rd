@@ -13,9 +13,6 @@ prep_fct_recode(var, old_codes, new_codes)
 
 \item{new_codes}{character vector of new replacements (should have the same order as old values!)}
 }
-\value{
-
-}
 \description{
 prep_fct_recode
 }

@@ -19,9 +19,6 @@ prep_mean_table(data, ..., outcomes, weight = NULL, gather = F, digits = 2)
 
 \item{digits}{number of digits to round to}
 }
-\value{
-
-}
 \description{
 prep_mean_table
 }

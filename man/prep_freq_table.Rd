@@ -12,9 +12,6 @@ prep_freq_table(data, ...)
 
 \item{...}{arbitrary number of grouping variables}
 }
-\value{
-
-}
 \description{
 prep_freq_table
 a function to calculate counts, proportions and conditional proportions based on grouping variables

@@ -68,7 +68,7 @@ prep_pivot_table <- function(df, index=NULL, columns=NULL,outcomes, agg_funs=mea
     
   }
   
-  print(outcomes)
+  #print(outcomes)
   
   #Create grouper
   

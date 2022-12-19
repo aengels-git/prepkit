@@ -26,9 +26,6 @@ prep_pivot_table(
 
 \item{fun_names}{A string or character vector to prepend the column names for each function}
 }
-\value{
-
-}
 \description{
 Pivot Tables inspired by pandas pivot_tables function
 }
