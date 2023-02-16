@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-month_recode<-function(x,abbr=T){
+dt_month_recode<-function(x,abbr=T){
   recodes<-as.character(seq(1:12))
   names(recodes)<-lubridate::month(1:12,abbr=abbr,label=T)
   x<-as.factor(as.character(x))
@@ -24,7 +24,7 @@ month_recode<-function(x,abbr=T){
 #' @export
 #'
 #' @examples
-start_of_month<-function(date){
+dt_start_month<-function(date){
   ym(paste0(year(date),ifelse(str_count(month(date))==1,paste0("0",month(date)),month(date))))
 }
 
@@ -36,7 +36,7 @@ start_of_month<-function(date){
 #' @export
 #'
 #' @examples
-end_of_month<-function(date){
+dt_end_month<-function(date){
   ymd(paste0(year(date),ifelse(str_count(month(date))==1,paste0("0",month(date)),month(date)),days_in_month(date)))
 }
 
@@ -49,7 +49,7 @@ end_of_month<-function(date){
 #' @export
 #'
 #' @examples
-to_year_month<-function(dates, template="{months} {years}"){
+dt_to_ym<-function(dates, template="{months} {years}"){
   require(glue)
   start<-min(dates)
   end<-max(dates)
@@ -58,7 +58,7 @@ to_year_month<-function(dates, template="{months} {years}"){
     years <- year(dates)
     return(glue(template))
   }
-  levels<-seq(start_of_month(start),end_of_month(end), by = '1 month')
+  levels<-seq(dt_start_month(start),dt_end_month(end), by = '1 month')
   levels<-year_month(levels,template=template)
   new_var<-fct_relevel(year_month(dates,template=template),levels)
   #Also include unused factor levels

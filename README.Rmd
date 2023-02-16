@@ -6,12 +6,12 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  warning = FALSE, message = FALSE,
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
-library(prepkit)
 ```
 
 # prepkit
@@ -19,35 +19,70 @@ library(prepkit)
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of prepkit is to ...
+
+Das Ziel von prepkit ist es die Datenaufbereitung zu erleichtern. 
 
 ## Installation
 
-You can install the development version of prepkit from [GitHub](https://github.com/) with:
+Sie können die aktuelle Version von prepkit über[GitHub](https://github.com/) installieren mit:
+
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("aengels-git/prepkit")
 ```
 
-## Example
+## Beispiel: prep_pivot_table
 
-This is a basic example which shows you how to solve a recoding:
+Pivot Tables sind in Python's Pandas Modul vorhanden. Prepkit bietet eine benutzerfreundliche R-Adaption. 
+Pivot Tables sind insbesondere nützlich um Statistiken zu Ergebnisvariablen über mehrere Gruppen zu vergleichen,
+da jede Gruppe eine eigene Spalte erhalten kann. 
 
-```{r}
+```{r prep_pivot_table}
 library(prepkit)
 library(ggplot2)
-prep_fct_recode(diamonds$cut,c("Fair","Good"),c("Acceptable","Pretty good"))[1:10]
+prep_pivot_table(diamonds,
+                 index = c(cut,clarity),# Variablen für die Aggregation über mehrere Zeilen
+                 columns = color, # Gruppierungsvariablen für die das Outcome verglichen werden soll
+                 outcomes = price, # Ergebnisvariablen
+                 agg_funs = median) # default = mean
 ```
 
-This is a basic example which shows you how to calculate a freq table:
+## Beispiel: prep_freq_table
 
-```{r}
+Die Funktion prep_freq_table bestimmt Häufigkeitstabellen, welche anschließend leicht visualisiert werden können, da ein Tibble zurückgegeben wird. Der Vorteil gegenüber anderen Funktionen ist, dass Anteile (prop), bedingte Anteil (prop_bedingung) und absolute Häufigkeiten (n) automatisch für jede Gruppierungsvariable bestimmt werden. Es können beliebig viele Gruppierungsvariablen übergeben werden. 
+
+```{r prep_freq_table}
 prep_freq_table(diamonds,cut,color)
 ```
 
-This is a basic example which shows you how to calculate mean tables:
+## Beispiel: prep_fct_recode
 
-```{r}
-prep_mean_table(diamonds,cut,outcomes=c("price"))
+Die Funktion prep_fct_recode bietet eine alternative Möglichkeit Faktorvariablen zu rekodieren: 
+
+```{r prep_fct_recode}
+prep_fct_recode(diamonds$cut,
+                old_codes = c("Fair","Good","Very Good"),
+                new_codes = c("Akzeptabel","Gut","Sehr gut"))[1:10]
 ```
+
+# Beispiel date Funktionen
+
+Die dt_function aus prepkit sind praktisch um Monatsanfang / ende des Jahres + Monat oder den Monatsnamen zu bestimmen:
+
+```{r date}
+economics%>%select(date)%>%
+  mutate(monats_anfang= dt_start_month(date),
+         monats_ende = dt_end_month(date),
+         monats_label = dt_month_recode(month(date),abbr=F),
+         monat_jahr = dt_to_ym(date))
+```
+
+# Beispiel str_replace_many 
+
+Die Funktion funktioniert wie str_replace aus stringr. Allerdings können mehrere patterns / replacements übergeben werden
+
+```{r str}
+str_replace_many(diamonds$cut,patterns = c("Good","Very"),replacements = c("Gut","Sehr"))%>%unique()
+```
+
