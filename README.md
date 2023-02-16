@@ -92,7 +92,7 @@ prep_fct_recode(diamonds$cut,
 #> Levels: Akzeptabel < Gut < Sehr gut < Premium < Ideal
 ```
 
-# Beispiel date Funktionen
+## Beispiel date Funktionen
 
 Die dt_function aus prepkit sind praktisch um Monatsanfang / ende des
 Jahres + Monat oder den Monatsnamen zu bestimmen:
@@ -119,7 +119,7 @@ economics%>%select(date)%>%
 #> # … with 564 more rows
 ```
 
-# Beispiel str_replace_many
+## Beispiel str_replace_many
 
 Die Funktion funktioniert wie str_replace aus stringr. Allerdings können
 mehrere patterns / replacements übergeben werden
