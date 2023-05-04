@@ -66,3 +66,39 @@ dt_to_ym<-function(dates, template="{months} {years}"){
 }
 
 # to_year_month(c(ymd("20190101"),ymd("20180101")),template = "{months}. {years} ")
+
+
+#' dt_int_overlap is a function to calculate the overlap between to periods in days
+#'
+#' @param first_period first interval variable
+#' @param second_period second interval variable
+#' @param unit days, seconds or minutes
+#' @param complete_data if true returns the full dataset that was calculated in between to derive the overlapping days (contains for instance the overlapping period as an interval)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+dt_int_overlap <- function(first_period,second_period,unit="days",complete_data=F){
+  correction_factor <- time_length(interval(ymd("20140101"),ymd("20140102")),unit = unit)
+  #Either vectors of intervals or a single interval
+  result <- tibble(first_period,second_period)%>%
+    mutate(any_overlap = int_overlaps(first_period,second_period))%>%
+    mutate(overlap_start = pmax(int_start(first_period),int_start(second_period)),
+           overlap_end = pmin(int_end(first_period),int_end(second_period)))
+  result$overlap_start[!result$any_overlap]<-NA
+  result$overlap_end[!result$any_overlap]<-NA
+  
+  result <- result%>%
+    mutate(overlap_interval = interval(overlap_start,overlap_end))%>%
+    mutate(overlap_outcome=time_length(overlap_interval,unit=unit)+correction_factor)%>%
+    mutate(overlap_outcome=ifelse(is.na(overlap_outcome),0,overlap_outcome))
+  if(complete_data){
+    return(result)
+  } else {
+    return(result%>%pull(overlap_outcome))
+  }
+}
+
+
+
